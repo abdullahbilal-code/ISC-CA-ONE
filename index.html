@@ -3,9 +3,58 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nawal Resturant</title>
+    <title>Nawal Sweets Bar</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+        .navbar {
+            background-color: #FAD7A0; /* Skin color */
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+        }
+        .menu-button {
+            background: none;
+            border: none;
+            font-size: 24px;
+            font-weight: bold;
+            font-family: 'Georgia', serif;
+            cursor: pointer;
+        }
+        .menu-icon {
+            font-size: 30px;
+            cursor: pointer;
+        }
+        .menu {
+            display: none;
+            position: absolute;
+            top: 50px;
+            left: 20px;
+            background: white;
+            border: 1px solid #ccc;
+            padding: 10px;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+    <script>
+        function toggleMenu() {
+            var menu = document.getElementById("menu");
+            menu.style.display = menu.style.display === "block" ? "none" : "block";
+        }
+    </script>
 </head>
 <body>
-    <p>Page is underdeveloped</p>
+    <div class="navbar">
+        <button class="menu-button" onclick="toggleMenu()">Nawal Sweets</button>
+        <div class="menu-icon">&#9776;</div>
+    </div>
+    <div id="menu" class="menu">
+        <p>Menu Item 1</p>
+        <p>Menu Item 2</p>
+        <p>Menu Item 3</p>
+    </div>
 </body>
 </html>
