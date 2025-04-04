@@ -100,9 +100,9 @@ function addToCart(productId) {
   renderCart();
 }
 
-// ---------------------
+
 // CART FUNCTIONALITY
-// ---------------------
+
 
 // Function to render the shopping cart details
 function renderCart() {
