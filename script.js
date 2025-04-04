@@ -114,17 +114,29 @@ function renderCart() {
 
   cart.forEach(item => {
     total += item.price * item.quantity;
+    
+    // Create a container for each cart item
     const cartItemDiv = document.createElement('div');
+    cartItemDiv.classList.add('cart-item'); // For styling in CSS
+
     cartItemDiv.innerHTML = `
       <p>${item.name} - €${item.price.toFixed(2)}</p>
-      <input type="number" value="${item.quantity}" min="1" onchange="updateQuantity(${item.id}, this.value)">
-      <button onclick="removeFromCart(${item.id})">Remove</button>
+      <div class="quantity-controls">
+        <button onclick="decrementCartQuantity(${item.id})">-</button>
+        <span id="cart-quantity-${item.id}">${item.quantity}</span>
+        <button onclick="incrementCartQuantity(${item.id})">+</button>
+      </div>
+      <button class="remove-btn" onclick="removeFromCart(${item.id})">
+        Remove
+      </button>
     `;
+
     cartItemsDiv.appendChild(cartItemDiv);
   });
 
   cartTotalSpan.innerText = total.toFixed(2);
 }
+
 
 // Function to update the quantity of a product in the cart
 function updateQuantity(productId, newQuantity) {
