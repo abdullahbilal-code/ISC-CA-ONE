@@ -6,7 +6,6 @@
             description: "Rich, creamy fudge chocolate.", 
             price: 2.50  
          },
-              
         {  id: 2, 
             name: "Caramel Toffee", 
             description: "Sweet, chewy caramel toffee.", 
@@ -71,10 +70,10 @@
     });
     
     cartDiv.innerHTML += `<p><strong>Total: €${total.toFixed(2)}</strong></p>`;
-  }
+   }
   
-  // Event listener for the checkout button
-  document.getElementById('checkout-btn').addEventListener('click', () => {
+    // Event listener for the checkout button
+    document.getElementById('checkout-btn').addEventListener('click', () => {
     // For now, simply clear the cart and show a confirmation message
     cart = [];
     renderCart();
