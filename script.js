@@ -90,20 +90,29 @@
           }
 }
 
-   // Function to remove a product from the cart
-       function removeFromCart(productId) {
-          cart = cart.filter(item => item.id !== productId);
-            renderCart();
-        }
+        // Function to remove a product from the cart
+           function removeFromCart(productId) {
+             cart = cart.filter(item => item.id !== productId);
+               renderCart();
+            }
   
-    // Event listener for the checkout button
-    document.getElementById('checkout-btn').addEventListener('click', () => {
-    // For now, simply clear the cart and show a confirmation message
-    cart = [];
-    renderCart();
-    document.getElementById('confirmation').innerText = "Order successfully placed!";
-  });
-  
-  // Initialize the app after the DOM is fully loaded
-  document.addEventListener('DOMContentLoaded', renderProducts);
-  
+    // Event listener for the checkout button with an alert if cart is empty
+     document.getElementById('checkout-btn').addEventListener('click', () => {
+       if (cart.length === 0) {
+             alert("Your shopping cart is empty. Please add a product before checking out.");
+        } 
+        else {
+             cart = [];
+                renderCart();
+           document.getElementById('confirmation').innerText = "Order successfully placed!";
+         }
+});
+
+// Function to handle the cart menu toggle (if needed)
+function toggleCartMenu() {
+  // Scroll to the shopping cart section
+  document.getElementById('shopping-cart').scrollIntoView({ behavior: 'smooth' });
+}
+
+// Initialize the app after the DOM is fully loaded
+document.addEventListener('DOMContentLoaded', renderProducts);
