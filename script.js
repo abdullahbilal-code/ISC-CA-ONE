@@ -1,118 +1,164 @@
-// Sample product data (for testing, will be replaced by API data later)
-      const products = [
-        { 
-            id: 1, 
-            name: "Chocolate Fudge", 
-            description: "Rich, creamy fudge chocolate.", 
-            price: 2.50  
-         },
-        {   
-            id: 2, 
-            name: "Caramel Toffee", 
-            description: "Sweet, chewy caramel toffee.", 
-            price: 1.75 
-        },
-        {  
-          id: 3, 
-          name: "Caramel Chocolate", 
-          description: "Sweet, chewy caramel Chocolate.", 
-          price: 1.75 
-      }
-  ];
-  
-  // Initialize an empty shopping cart
-  let cart = [];
-  
-  // Render the list of products on the page
-  function renderProducts() {
-    const productListDiv = document.getElementById('product-list');
-    productListDiv.innerHTML = ''; // Clear previous products if any
-    
-    products.forEach(product => {
-      const productDiv = document.createElement('div');
-      productDiv.innerHTML = `
-        <h3>${product.name}</h3>
-        <p>${product.description}</p>
-        <p>Price: €${product.price.toFixed(2)}</p>
-        <input type="number" id="qty-${product.id}" min="1" value="1">
-        <button onclick="addToCart(${product.id})">Add to Cart</button>
-      `;
-      productListDiv.appendChild(productDiv);
-    });
+// Sample product data (with image URLs)
+const products = [
+  {
+    id: 1,
+    name: "Chocolate Fudge",
+    description: "Rich, creamy fudge chocolate.",
+    price: 2.50,
+    image: "https://via.placeholder.com/150/000000/FFFFFF?text=Chocolate+Fudge"
+  },
+  {
+    id: 2,
+    name: "Caramel Toffee",
+    description: "Sweet, chewy caramel toffee.",
+    price: 1.75,
+    image: "https://via.placeholder.com/150/FF5733/FFFFFF?text=Caramel+Toffee"
+  },
+  {
+    id: 3,
+    name: "Strawberry Candy",
+    description: "Delicious strawberry-flavored candy.",
+    price: 1.25,
+    image: "https://via.placeholder.com/150/FFB6C1/FFFFFF?text=Strawberry"
+  },
+  {
+    id: 4,
+    name: "Mint Delight",
+    description: "Cool, minty sweet treat.",
+    price: 1.95,
+    image: "https://via.placeholder.com/150/98FB98/FFFFFF?text=Mint+Delight"
   }
-  
-  // Function to add a product to the cart
-  function addToCart(productId) {
-    const qtyInput = document.getElementById(`qty-${productId}`);
-    const quantity = parseInt(qtyInput.value);
-    
-    // Find product by ID
-    const product = products.find(p => p.id === productId);
-    
-    // Check if product already exists in the cart; if so, update its quantity
-    const existingItem = cart.find(item => item.id === productId);
-    if (existingItem) {
-      existingItem.quantity += quantity;
-    } else {
-      cart.push({ ...product, quantity });
-    }
-    
-    renderCart();
-  }
-  
-  // Function to render the shopping cart details
-  function renderCart() {
-    const cartItemsDiv = document.getElementById('cart-items');
-    const cartTotalSpan = document.getElementById('cart-total');
-    cartItemsDiv.innerHTML = '';
-    let total = 0;
-  
-    cart.forEach(item => {
-      total += item.price * item.quantity;
-      const cartItemDiv = document.createElement('div');
-      cartItemDiv.innerHTML = `
-        <p>${item.name} - €${item.price.toFixed(2)}</p>
-        <input type="number" value="${item.quantity}" min="1" onchange="updateQuantity(${item.id}, this.value)">
-        <button onclick="removeFromCart(${item.id})">Remove</button>
-      `;
-      cartItemsDiv.appendChild(cartItemDiv);
-    });
-  
-    cartTotalSpan.innerText = total.toFixed(2);
-  }
+];
 
-   // Function to update the quantity of a product in the cart
-     function updateQuantity(productId, newQuantity) {
-       const item = cart.find(item => item.id === productId);
-         if (item) {
-           item.quantity = parseInt(newQuantity, 10);
-             renderCart();
-          }
+// Initialize an empty shopping cart
+let cart = [];
+
+// Object to hold the selected quantity for each product
+const productQuantities = {};
+
+// Function to render the products in a grid layout with image, name, quantity controls, and Add to Cart button
+function renderProducts() {
+  const productSection = document.getElementById('product-section');
+  productSection.innerHTML = ''; // Clear previous content
+
+  products.forEach(product => {
+    // Initialize quantity to 1 if not set
+    if (!productQuantities[product.id]) {
+      productQuantities[product.id] = 1;
+    }
+
+    // Create a product card container
+    const productCard = document.createElement('div');
+    productCard.classList.add('product-card');
+
+    productCard.innerHTML = `
+      <img src="${product.image}" alt="${product.name}">
+      <h3>${product.name}</h3>
+      <p>Price: €${product.price.toFixed(2)}</p>
+      <div class="quantity-controls">
+        <button onclick="decrementQuantity(${product.id})">-</button>
+        <span id="quantity-${product.id}">${productQuantities[product.id]}</span>
+        <button onclick="incrementQuantity(${product.id})">+</button>
+      </div>
+      <button class="add-to-cart-btn" onclick="addToCart(${product.id})">Add to Cart</button>
+    `;
+
+    productSection.appendChild(productCard);
+  });
 }
 
-        // Function to remove a product from the cart
-           function removeFromCart(productId) {
-             cart = cart.filter(item => item.id !== productId);
-               renderCart();
-            }
-  
-    // Event listener for the checkout button with an alert if cart is empty
-     document.getElementById('checkout-btn').addEventListener('click', () => {
-       if (cart.length === 0) {
-             alert("Your shopping cart is empty. Please add a product before checking out.");
-        } 
-        else {
-             cart = [];
-                renderCart();
-           document.getElementById('confirmation').innerText = "Order successfully placed!";
-         }
+// Increment product quantity in the product card
+function incrementQuantity(productId) {
+  productQuantities[productId]++;
+  document.getElementById(`quantity-${productId}`).innerText = productQuantities[productId];
+}
+
+// Decrement product quantity in the product card (minimum 1)
+function decrementQuantity(productId) {
+  if (productQuantities[productId] > 1) {
+    productQuantities[productId]--;
+    document.getElementById(`quantity-${productId}`).innerText = productQuantities[productId];
+  }
+}
+
+// Add product to cart with the selected quantity
+function addToCart(productId) {
+  const product = products.find(p => p.id === productId);
+  const selectedQuantity = productQuantities[productId];
+  const existingItem = cart.find(item => item.id === productId);
+
+  if (existingItem) {
+    existingItem.quantity += selectedQuantity;
+  } else {
+    cart.push({ ...product, quantity: selectedQuantity });
+  }
+
+  // Reset quantity in product card back to 1 after adding to cart
+  productQuantities[productId] = 1;
+  document.getElementById(`quantity-${productId}`).innerText = productQuantities[productId];
+
+  renderCart();
+}
+
+// ---------------------
+// CART FUNCTIONALITY
+// ---------------------
+
+// Function to render the shopping cart details
+function renderCart() {
+  const cartItemsDiv = document.getElementById('cart-items');
+  const cartTotalSpan = document.getElementById('cart-total');
+  cartItemsDiv.innerHTML = '';
+  let total = 0;
+
+  cart.forEach(item => {
+    total += item.price * item.quantity;
+    const cartItemDiv = document.createElement('div');
+    cartItemDiv.innerHTML = `
+      <p>${item.name} - €${item.price.toFixed(2)}</p>
+      <input type="number" value="${item.quantity}" min="1" onchange="updateQuantity(${item.id}, this.value)">
+      <button onclick="removeFromCart(${item.id})">Remove</button>
+    `;
+    cartItemsDiv.appendChild(cartItemDiv);
+  });
+
+  cartTotalSpan.innerText = total.toFixed(2);
+}
+
+// Function to update the quantity of a product in the cart
+function updateQuantity(productId, newQuantity) {
+  const item = cart.find(item => item.id === productId);
+  if (item) {
+    item.quantity = parseInt(newQuantity, 10);
+    renderCart();
+  }
+}
+
+// Function to remove a product from the cart
+function removeFromCart(productId) {
+  cart = cart.filter(item => item.id !== productId);
+  renderCart();
+}
+
+// Event listener for the checkout button with an alert if cart is empty
+document.getElementById('checkout-btn').addEventListener('click', () => {
+  if (cart.length === 0) {
+    alert("Your shopping cart is empty. Please add a product before checking out.");
+  } else {
+    cart = [];
+    renderCart();
+    document.getElementById('confirmation').innerText = "Order successfully placed!";
+  }
 });
 
 // Function to handle the cart menu toggle (if needed)
 function toggleCartMenu() {
   // Scroll to the shopping cart section
-  document.getElementById('shopping-cart').scrollIntoView({ behavior: 'smooth' });
+  document.getElementById('cart-section').scrollIntoView({ behavior: 'smooth' });
 }
 
 // Initialize the app after the DOM is fully loaded
-document.addEventListener('DOMContentLoaded', renderProducts);
+document.addEventListener('DOMContentLoaded', () => {
+  renderProducts();
+  renderCart();
+});
