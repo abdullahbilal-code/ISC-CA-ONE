@@ -22,7 +22,23 @@ function getUsers() {
     }
   }
   
-  // Signup function with already registered email validation
+  // Toggle password visibility for a given field
+  function togglePassword(fieldId, toggleButton) {
+    const passwordField = document.getElementById(fieldId);
+    const icon = toggleButton.querySelector('i');
+  
+    if (passwordField.type === 'password') {
+      passwordField.type = 'text';
+      icon.classList.remove('fa-eye');
+      icon.classList.add('fa-eye-slash');
+    } else {
+      passwordField.type = 'password';
+      icon.classList.remove('fa-eye-slash');
+      icon.classList.add('fa-eye');
+    }
+  }
+  
+  // Signup function with validation and already registered email check
   function signupUser() {
     const name = document.getElementById('signup-name').value.trim();
     const email = document.getElementById('signup-email').value.trim();
@@ -30,7 +46,6 @@ function getUsers() {
     const confirmPassword = document.getElementById('signup-confirm-password').value;
     const messageElem = document.getElementById('signup-message');
   
-    // Basic validation
     if (!name || !email || !password || !confirmPassword) {
       messageElem.style.color = 'red';
       messageElem.innerText = "Please fill in all fields.";
@@ -44,7 +59,6 @@ function getUsers() {
     }
   
     const users = getUsers();
-    // Check if email already exists (case-insensitive)
     const userExists = users.some(user => user.email.toLowerCase() === email.toLowerCase());
     if (userExists) {
       messageElem.style.color = 'red';
@@ -52,14 +66,12 @@ function getUsers() {
       return;
     }
   
-    // Save new user
     const newUser = { name, email, password };
     users.push(newUser);
     saveUsers(users);
   
     messageElem.style.color = 'green';
     messageElem.innerText = "Sign Up successful! Please log in.";
-    // Optionally switch to login form after a delay
     setTimeout(() => {
       toggleForm('login');
     }, 1500);
@@ -87,7 +99,6 @@ function getUsers() {
     if (user) {
       messageElem.style.color = 'green';
       messageElem.innerText = "Login successful! Redirecting...";
-      // Redirect to shop page or main app after a delay
       setTimeout(() => {
         window.location.href = "shop.html"; // Update with your shop page
       }, 1000);

@@ -38,9 +38,35 @@
     margin: 10px 0;
     border-radius: 5px;
     border: 1px solid #ddd;
+    width: 100%;
   }
   
-  /* Buttons */
+  /* Password Container Styling */
+  .password-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+  
+  .password-container input {
+    width: 100%;
+    padding-right: 40px; /* Space for the toggle button */
+  }
+  
+  .toggle-password {
+    position: absolute;
+    right: 10px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 5px;
+  }
+  
+  .toggle-password i {
+    font-size: 1.2em;
+  }
+  
+  /* Button Styling */
   button {
     padding: 10px;
     background-color: #ff914d;
@@ -66,12 +92,12 @@
     text-decoration: underline;
   }
   
-  /* Hidden class to toggle form display */
+  /* Hidden Class */
   .hidden {
     display: none;
   }
   
-  /* Message styling for errors/success */
+  /* Message Styling */
   .message {
     margin-top: 15px;
     font-weight: bold;
