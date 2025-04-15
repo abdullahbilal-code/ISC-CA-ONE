@@ -85,7 +85,7 @@ function loginUser() {
       messageElem.innerText = data.message;
       // For demonstration, store the logged-in user's id in localStorage
       localStorage.setItem('sweetshop-user', JSON.stringify(data.user));
-      setTimeout(() => { window.location.href = 'index.html'; }, 1000);
+      setTimeout(() => { window.location.href = '/'; }, 1000);
     } else {
       messageElem.style.color = 'red';
       messageElem.innerText = data.message;

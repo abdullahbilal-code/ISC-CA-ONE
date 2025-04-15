@@ -4,9 +4,6 @@ from datetime import datetime
 
 app = Flask(__name__)
 
-# Path to our JSON file acting as a database
-DB_PATH = os.path.join(os.path.dirname(__file__), 'DB.json')
-
 def read_db():
     with open("./static/js/DB.json", 'r') as f:
         return json.load(f)
@@ -61,7 +58,7 @@ def get_products():
             "name": "Chocolate Fudge",
             "description": "Rich, creamy fudge chocolate.",
             "price": 2.50,
-            "image": "https://via.placeholder.com/150/000000/FFFFFF?text=Chocolate+Fudge"
+            "image": "../static/images/chocolate_fudge.jpg"
         },
         {
             "id": 2,
@@ -69,7 +66,21 @@ def get_products():
             "description": "Sweet, chewy caramel toffee.",
             "price": 1.75,
             "image": "https://via.placeholder.com/150/FF5733/FFFFFF?text=Caramel+Toffee"
-        }
+        },
+        {
+           "id": 3,
+           "name": "Strawberry Candy",
+           "description": "Delicious strawberry-flavored candy.",
+           "price": 1.25,
+           "image": "https://via.placeholder.com/150/FFB6C1/FFFFFF?text=Strawberry"
+        },
+       {
+         "id": 4,
+         "name": "Mint Delight",
+         "description": "Cool, minty sweet treat.",
+         "price": 1.95,
+         "image": "https://via.placeholder.com/150/98FB98/FFFFFF?text=Mint+Delight"
+       }
         # Add more products as needed
     ]
     return jsonify(products)

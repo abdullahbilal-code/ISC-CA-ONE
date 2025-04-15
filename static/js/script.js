@@ -5,14 +5,14 @@ const products = [
     name: "Chocolate Fudge",
     description: "Rich, creamy fudge chocolate.",
     price: 2.50,
-    image: "https://via.placeholder.com/150/000000/FFFFFF?text=Chocolate+Fudge"
+    image: "./images/chocolate-fudge.jpg"
   },
   {
     id: 2,
     name: "Caramel Toffee",
     description: "Sweet, chewy caramel toffee.",
     price: 1.75,
-    image: "https://via.placeholder.com/150/FF5733/FFFFFF?text=Caramel+Toffee"
+    image: "./images/caramel-toffee.jpg"
   },
   {
     id: 3,
