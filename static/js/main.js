@@ -27,7 +27,9 @@ function renderProducts() {
     productCard.innerHTML = `
       <img src="${product.image}" alt="${product.name}">
       <h3>${product.name}</h3>
-      <p>Price: €${product.price.toFixed(2)}</p>
+      <p>${product.description}</p>
+      <p>${product.price.toFixed(2)} €</p>
+
       <div class="quantity-controls">
         <button onclick="decrementQuantity(${product.id})">-</button>
         <span id="quantity-${product.id}">${productQuantities[product.id]}</span>

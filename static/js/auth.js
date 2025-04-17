@@ -33,10 +33,11 @@ function signupUser() {
   const password = document.getElementById('signup-password').value;
   const confirmPassword = document.getElementById('signup-confirm-password').value;
   const messageElem = document.getElementById('signup-message');
+  const phoneNumber=parseInt(document.getElementById('phone-number').value.trim());
 
-  if (!name || !email || !password || !confirmPassword) {
+  if (!name || !email || !password || !confirmPassword || !phoneNumber) {
     messageElem.style.color = 'red';
-    messageElem.innerText = "Please fill in all fields.";
+    messageElem.innerText = "Please Complete All Fields.";
     return;
   }
   if (password !== confirmPassword) {
@@ -48,7 +49,7 @@ function signupUser() {
   fetch('/api/signup', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ name, email, password })
+    body: JSON.stringify({ name, email, password , phoneNumber })
   })
   .then(response => response.json().then(data => ({ status: response.status, data })))
   .then(({ status, data }) => {
